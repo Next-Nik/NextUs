@@ -208,48 +208,47 @@ export default function Heptagon({
         onClick={onCentreClick}
         role="button"
         tabIndex={0}
-        aria-label={centreLabel ? `${centreLabel} — click to expand` : "Overview"}
+        aria-label={centreLabel ? `${centreLabel} — click to expand` : "Our Planet"}
         onKeyDown={(e) => e.key === "Enter" && onCentreClick && onCentreClick()}
         style={{ cursor: onCentreClick ? "pointer" : "default" }}
       >
         <circle
-          cx={CX} cy={CY} r={64}
+          cx={CX} cy={CY} r={76}
           fill="rgba(250,248,244,0.97)"
-          stroke="rgba(200,146,42,0.22)"
-          strokeWidth="1"
+          stroke="rgba(200,146,42,0.28)"
+          strokeWidth="1.5"
           className={styles.centreCircle}
         />
         {centreLabel && (
           <>
             <text
-              x={CX} y={CY - 4}
+              x={CX} y={CY - 6}
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#C8922A"
-              fontSize="9"
-              fontFamily="'Cormorant SC', serif"
+              fontSize="12"
+              fontFamily="'Cormorant Garamond', Georgia, serif"
               fontWeight="400"
-              letterSpacing="0.08em"
+              fontStyle="italic"
               style={{ pointerEvents: "none", userSelect: "none" }}
             >
               {centreLabel.split(" ").map((word, wi, arr) => (
                 <tspan
                   key={wi}
                   x={CX}
-                  dy={wi === 0 ? `${-(arr.length - 1) * 0.6}em` : "1.25em"}
+                  dy={wi === 0 ? `${-(arr.length - 1) * 0.65}em` : "1.3em"}
                 >
                   {word}
                 </tspan>
               ))}
             </text>
-            {/* Small expand hint */}
             <text
-              x={CX} y={CY + 22}
+              x={CX} y={CY + 26}
               textAnchor="middle"
-              fill="rgba(200,146,42,0.5)"
-              fontSize="8"
-              fontFamily="'Cormorant Garamond', serif"
-              fontStyle="italic"
+              fill="rgba(200,146,42,0.45)"
+              fontSize="9"
+              fontFamily="'Cormorant SC', serif"
+              letterSpacing="0.08em"
               style={{ pointerEvents: "none", userSelect: "none" }}
             >
               expand
