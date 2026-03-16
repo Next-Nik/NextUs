@@ -22,7 +22,7 @@ export default function DomainPanel({
       {/* Back button — top of panel */}
       {onBack && (
         <button className={styles.backBtn} onClick={onBack}>
-          <span className={styles.backArrow}>←</span> Back to {parentLabel}
+          <span className={styles.backArrow}>←</span> {parentLabel}
         </button>
       )}
 
@@ -46,7 +46,7 @@ export default function DomainPanel({
       {/* Explore button — right under the title */}
       {level < 4 ? (
         <button className={styles.exploreBtnTop} onClick={onExploreSubDomains}>
-          {level === 0 ? "Explore sub-domains" : level < 3 ? "Explore deeper" : "Explore this field"}
+          Explore {item.name}
           <span className={styles.arrow}>→</span>
         </button>
       ) : (
