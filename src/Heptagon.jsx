@@ -226,7 +226,7 @@ export default function Heptagon({
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#C8922A"
-              fontSize="12"
+              fontSize="16"
               fontFamily="'Cormorant Garamond', Georgia, serif"
               fontWeight="400"
               fontStyle="italic"
