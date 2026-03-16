@@ -4,9 +4,9 @@ import styles from "./Heptagon.module.css";
 const N = 7;
 const CX = 260;
 const CY = 260;
-const RADIUS = 178;
-const NODE_R_DEFAULT = 36;   // larger nodes for legibility
-const NODE_R_ACTIVE = 46;
+const RADIUS = 170;
+const NODE_R_DEFAULT = 42;   // larger for legibility
+const NODE_R_ACTIVE = 52;
 const INTRO_SPIN_DEG_PER_SEC = 60;
 const INTRO_SPIN_DURATION_MS = 2400;
 
@@ -145,12 +145,12 @@ export default function Heptagon({
         const isActive = !isSpinning && !isIdle && i === activeIndex;
         const r = isActive ? NODE_R_ACTIVE : NODE_R_DEFAULT;
         const words = getNodeLabel(domain.name);
-        const fontSize = isActive ? "11" : "10";
+        const fontSize = isActive ? "14" : "13";
         const fillColor = isSpinning
-          ? "rgba(74,74,74,0.4)"
+          ? "rgba(74,74,74,0.35)"
           : isActive
-            ? "#C8922A"
-            : "#4A4A4A";  // full dark, not washed out
+            ? "var(--dark, #0F1523)"   // dark on gold bg — high contrast
+            : "#3A3A3A";               // strong dark, not washed out
 
         return (
           <g
@@ -180,9 +180,9 @@ export default function Heptagon({
               dominantBaseline="middle"
               fill={fillColor}
               fontSize={fontSize}
-              fontFamily="'Cormorant SC', serif"
-              fontWeight={isActive ? "500" : "400"}
-              letterSpacing="0.05em"
+              fontFamily="'Cormorant Garamond', Georgia, serif"
+              fontWeight={isActive ? "400" : "300"}
+              letterSpacing="0.02em"
               style={{ pointerEvents: "none", userSelect: "none" }}
             >
               {words.map((word, wi) => (
