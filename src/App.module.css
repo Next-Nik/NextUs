@@ -190,3 +190,87 @@
   min-width: 20px;
   opacity: 0.6;
 }
+
+/* ── OVERVIEW EFFECT PANEL ── */
+.overviewPanel {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  max-width: 480px;
+  padding: 0 8px;
+}
+
+.overviewVisible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.overviewEyebrow {
+  font-family: 'Cormorant SC', serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: var(--meta);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.overviewTitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 300;
+  color: var(--dark);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.overviewDivider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold-line);
+  margin-bottom: 22px;
+}
+
+.overviewBody {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 300;
+  color: var(--body);
+  line-height: 1.75;
+  margin-bottom: 14px;
+  opacity: 0.9;
+}
+
+.overviewGoal {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(15px, 2.2vw, 18px);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1.55;
+  border-left: 2px solid var(--gold-line);
+  padding-left: 16px;
+  margin: 22px 0 28px;
+}
+
+.overviewClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Cormorant SC', serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  color: var(--meta);
+  text-transform: uppercase;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.overviewClose:hover {
+  color: var(--gold);
+}
+
+/* Centre group in SVG — handled via style prop in JSX */
