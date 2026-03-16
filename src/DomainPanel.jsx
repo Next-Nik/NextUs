@@ -44,13 +44,13 @@ export default function DomainPanel({
       <h2 className={styles.domainName}>{item.name}</h2>
 
       {/* Explore button — right under the title */}
-      {hasSubDomains ? (
+      {level < 4 ? (
         <button className={styles.exploreBtnTop} onClick={onExploreSubDomains}>
-          {level < 2 ? "Explore sub-domains" : "Explore deeper"}
+          {level === 0 ? "Explore sub-domains" : level < 3 ? "Explore deeper" : "Explore this field"}
           <span className={styles.arrow}>→</span>
         </button>
       ) : (
-        <p className={styles.comingSoonTop}>Sub-domains being mapped —</p>
+        <p className={styles.comingSoonTop}>This level is being mapped —</p>
       )}
 
       {/* Horizon goal */}
@@ -75,7 +75,7 @@ export default function DomainPanel({
 
       {/* Mailing list CTA */}
       <div className={styles.mailingList}>
-        <p className={styles.mailingLabel}>Stay informed as this domain is mapped.</p>
+        <p className={styles.mailingLabel}>Join us — stay up to date as we build.</p>
         <form
           className={styles.mailingForm}
           onSubmit={(e) => {
