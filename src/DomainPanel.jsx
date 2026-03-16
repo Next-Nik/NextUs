@@ -15,8 +15,17 @@ export default function DomainPanel({
   const hasSubDomains =
     item.subDomains && item.subDomains.length > 0 && item.subDomains[0].name !== "Placeholder";
   const isPlaceholder = item.horizonGoal === "placeholder";
+
   return (
     <div className={`${styles.panel} ${isVisible ? styles.visible : ""}`}>
+
+      {/* Back button — top of panel */}
+      {onBack && (
+        <button className={styles.backBtn} onClick={onBack}>
+          <span className={styles.backArrow}>←</span> Back to {parentLabel}
+        </button>
+      )}
+
       {/* Breadcrumb */}
       {breadcrumb.length > 1 && (
         <nav className={styles.breadcrumb} aria-label="Navigation path">
@@ -33,6 +42,16 @@ export default function DomainPanel({
 
       {/* Domain name */}
       <h2 className={styles.domainName}>{item.name}</h2>
+
+      {/* Explore button — right under the title */}
+      {hasSubDomains ? (
+        <button className={styles.exploreBtnTop} onClick={onExploreSubDomains}>
+          {level < 2 ? "Explore sub-domains" : "Explore deeper"}
+          <span className={styles.arrow}>→</span>
+        </button>
+      ) : (
+        <p className={styles.comingSoonTop}>Sub-domains being mapped —</p>
+      )}
 
       {/* Horizon goal */}
       <p className={styles.horizonGoal}>
@@ -54,48 +73,38 @@ export default function DomainPanel({
       {/* Divider */}
       <div className={styles.divider} />
 
-      {/* Actions */}
-      <div className={styles.actions}>
-        {hasSubDomains ? (
-          <button className={styles.exploreBtn} onClick={onExploreSubDomains}>
-            {level < 2 ? "Explore sub-domains" : "Explore deeper"}
-            <span className={styles.arrow}>→</span>
+      {/* Mailing list CTA */}
+      <div className={styles.mailingList}>
+        <p className={styles.mailingLabel}>Stay informed as this domain is mapped.</p>
+        <form
+          className={styles.mailingForm}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const email = e.target.email.value;
+            if (email) {
+              window.location.href = `mailto:hello@nextus.world?subject=Keep me informed: ${item.name}&body=Please keep me informed about ${item.name} on NextUs. My email: ${email}`;
+            }
+          }}
+        >
+          <input
+            type="email"
+            name="email"
+            className={styles.mailingInput}
+            placeholder="your@email.com"
+            required
+          />
+          <button type="submit" className={styles.mailingBtn}>
+            Stay informed →
           </button>
-        ) : (
-          <p className={styles.comingSoon}>Sub-domains being mapped —</p>
-        )}
-
-        <button className={styles.contributeLink} onClick={onContribute}>
-          Contribute to this vision →
-        </button>
+        </form>
       </div>
-
-      {/* Back */}
-      {onBack && (
-        <button className={styles.backBtn} onClick={onBack}>
-          <span className={styles.backArrow}>←</span> Back to {parentLabel}
-        </button>
-      )}
 
       {/* Prev / Next navigation */}
       <div className={styles.navArrows}>
-        <button
-          className={styles.navBtn}
-          onClick={onPrev}
-          aria-label="Previous domain"
-          title="Previous (←)"
-        >
-          ‹
-        </button>
-        <button
-          className={styles.navBtn}
-          onClick={onNext}
-          aria-label="Next domain"
-          title="Next (→)"
-        >
-          ›
-        </button>
+        <button className={styles.navBtn} onClick={onPrev} aria-label="Previous domain">‹</button>
+        <button className={styles.navBtn} onClick={onNext} aria-label="Next domain">›</button>
       </div>
+
     </div>
   );
 }
