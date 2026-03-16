@@ -53,8 +53,8 @@ export default function App() {
       breadcrumb,
       level: levelPath.length,
       parentLabel: levelPath.length > 0
-        ? (getItemAtPath(levelPath.slice(0, -1))?.name ?? "NextUs")
-        : "NextUs",
+        ? (getItemAtPath(levelPath.slice(0, -1))?.name ?? "Our Planet")
+        : "Our Planet",
     };
   }
 
