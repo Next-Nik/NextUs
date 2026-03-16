@@ -131,7 +131,6 @@ export default function App() {
     setLevelPath((prev) => [...prev, { index: activeIndex }]);
     setActiveIndex(null);
   }
-
   function handleBack() {
     if (levelPath.length === 0) return;
     const prevIndex = levelPath[levelPath.length - 1].index;
