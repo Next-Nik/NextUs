@@ -5,15 +5,20 @@ import ContributeModal from "./ContributeModal";
 import { domains, TOP_LEVEL_GOAL } from "./data";
 import styles from "./App.module.css";
 
+const OVERVIEW_TEXT = `The Overview Effect is what astronauts report when they first see Earth from space — a sudden, irreversible recognition of the whole. The boundaries dissolve. The fragmentation that seemed permanent from inside it becomes obviously contingent from outside it.
+
+NextUs is built from that vantage point.
+
+Seven domains. Every scale. One map of what humanity is working on — and what still needs attention.`;
+
 export default function App() {
-  // Navigation state
-  const [activeIndex, setActiveIndex] = useState(null); // null = idle/all visible
-  const [levelPath, setLevelPath] = useState([]); // array of { domainIndex, subIndex } for drill-down
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [levelPath, setLevelPath] = useState([]);
   const [contributeOpen, setContributeOpen] = useState(false);
+  const [overviewOpen, setOverviewOpen] = useState(false);
 
   const isIdle = activeIndex === null;
 
-  // Derive current domain list and selected item based on levelPath
   function getNavigationState() {
     if (levelPath.length === 0) {
       return {
@@ -38,11 +43,6 @@ export default function App() {
       }
     }
 
-    // The current list is the subDomains of the last item in levelPath except the innermost
-    const lastEntry = levelPath[levelPath.length - 1];
-    const parentItem = levelPath.length > 1
-      ? getItemAtPath(levelPath.slice(0, -1))
-      : null;
     const currentList = levelPath.length === 1
       ? domains[levelPath[0].index].subDomains
       : getItemAtPath(levelPath.slice(0, -1)).subDomains;
@@ -52,7 +52,9 @@ export default function App() {
       selectedItem: activeIndex !== null ? currentList[activeIndex] : null,
       breadcrumb,
       level: levelPath.length,
-      parentLabel: levelPath.length > 0 ? getItemAtPath(levelPath.slice(0, -1))?.name ?? "NextUs" : "NextUs",
+      parentLabel: levelPath.length > 0
+        ? (getItemAtPath(levelPath.slice(0, -1))?.name ?? "NextUs")
+        : "NextUs",
     };
   }
 
@@ -69,35 +71,38 @@ export default function App() {
 
   const navState = getNavigationState();
 
-  // Keyboard navigation
-  const handleKey = useCallback(
-    (e) => {
-      if (contributeOpen) return;
+  // Derive centre label — what level are we on?
+  function getCentreLabel() {
+    if (levelPath.length === 0) return "Our Planet";
+    const parentItem = getItemAtPath(levelPath);
+    return parentItem?.name ?? "Our Planet";
+  }
 
-      const len = navState.currentList.length;
+  function handleCentreClick() {
+    if (levelPath.length === 0) {
+      // Top level — toggle Overview Effect panel
+      setOverviewOpen((prev) => !prev);
+    } else {
+      // Domain/sub-domain level — show horizon goal for this level
+      // (handled in the panel, just close any selected domain)
+      setActiveIndex(null);
+    }
+  }
 
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        if (isIdle) {
-          setActiveIndex(0);
-        } else {
-          setActiveIndex((prev) => (prev + 1) % len);
-        }
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        if (isIdle) {
-          setActiveIndex(len - 1);
-        } else {
-          setActiveIndex((prev) => (prev - 1 + len) % len);
-        }
-      } else if (e.key === "Escape") {
-        if (activeIndex !== null) {
-          setActiveIndex(null);
-        }
-      }
-    },
-    [isIdle, navState.currentList.length, activeIndex, contributeOpen]
-  );
+  const handleKey = useCallback((e) => {
+    if (contributeOpen || overviewOpen) return;
+    const len = navState.currentList.length;
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      setActiveIndex((prev) => prev === null ? 0 : (prev + 1) % len);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      setActiveIndex((prev) => prev === null ? len - 1 : (prev - 1 + len) % len);
+    } else if (e.key === "Escape") {
+      if (overviewOpen) { setOverviewOpen(false); return; }
+      if (activeIndex !== null) setActiveIndex(null);
+    }
+  }, [isIdle, navState.currentList.length, activeIndex, contributeOpen, overviewOpen]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKey);
@@ -106,99 +111,81 @@ export default function App() {
 
   function handleSelect(index) {
     setActiveIndex(index);
+    setOverviewOpen(false);
   }
 
   function handlePrev() {
     const len = navState.currentList.length;
-    if (isIdle) {
-      setActiveIndex(len - 1);
-    } else {
-      setActiveIndex((prev) => (prev - 1 + len) % len);
-    }
+    setActiveIndex((prev) => prev === null ? len - 1 : (prev - 1 + len) % len);
   }
 
   function handleNext() {
     const len = navState.currentList.length;
-    if (isIdle) {
-      setActiveIndex(0);
-    } else {
-      setActiveIndex((prev) => (prev + 1) % len);
-    }
+    setActiveIndex((prev) => prev === null ? 0 : (prev + 1) % len);
   }
 
   function handleExploreSubDomains() {
     if (activeIndex === null) return;
     const currentItem = navState.currentList[activeIndex];
     if (!currentItem.subDomains || currentItem.subDomains.length === 0) return;
-
-    // Push current selection onto path
     setLevelPath((prev) => [...prev, { index: activeIndex }]);
-    setActiveIndex(null); // reset to idle at new level
+    setActiveIndex(null);
   }
 
   function handleBack() {
     if (levelPath.length === 0) return;
-    const newPath = levelPath.slice(0, -1);
     const prevIndex = levelPath[levelPath.length - 1].index;
-    setLevelPath(newPath);
-    setActiveIndex(prevIndex); // return to the parent item that was selected
-  }
-
-  function handleIdleClick() {
-    setActiveIndex(null);
-    if (levelPath.length === 0) return;
+    setLevelPath((prev) => prev.slice(0, -1));
+    setActiveIndex(prevIndex);
   }
 
   const selectedItem = activeIndex !== null ? navState.currentList[activeIndex] : null;
+  const centreLabel = getCentreLabel();
 
   return (
     <div className={styles.app}>
-      {/* Subtle grain texture overlay */}
       <div className={styles.grain} aria-hidden="true" />
 
-      {/* Header */}
       <header className={styles.header}>
         <p className={styles.eyebrow}>NEXTUS · THE SEVEN DOMAINS</p>
       </header>
 
       <main className={styles.main}>
-        {/* Left / Heptagon column */}
+        {/* Heptagon column */}
         <div className={styles.heptagonCol}>
-          {/* Centre text inside heptagon — positioned absolutely over SVG */}
           <div className={styles.heptagonWrapper}>
             <Heptagon
               domains={navState.currentList}
               activeIndex={activeIndex ?? 0}
               onSelect={handleSelect}
               isIdle={isIdle}
+              centreLabel={centreLabel}
+              onCentreClick={handleCentreClick}
             />
-
-            {/* Centre overlay */}
-            <div
-              className={`${styles.centre} ${isIdle ? styles.centreIdle : styles.centreDomain}`}
-              onClick={isIdle ? undefined : () => setActiveIndex(null)}
-            >
-              {isIdle ? (
-                <p className={styles.centreGoal}>{TOP_LEVEL_GOAL}</p>
-              ) : (
-                <p className={styles.centreActive}>
-                  {navState.currentList[activeIndex]?.name}
-                </p>
-              )}
-            </div>
           </div>
-
-          {/* Idle instruction */}
-          {isIdle && (
-            <p className={styles.instruction}>
-              Click any domain — or let it land
-            </p>
-          )}
         </div>
 
-        {/* Right / Panel column */}
+        {/* Panel column */}
         <div className={styles.panelCol}>
-          {!isIdle && selectedItem ? (
+
+          {/* Overview Effect panel */}
+          {overviewOpen && (
+            <div className={`${styles.overviewPanel} ${overviewOpen ? styles.overviewVisible : ""}`}>
+              <p className={styles.overviewEyebrow}>NEXTUS · OUR PLANET</p>
+              <h2 className={styles.overviewTitle}>The Overview Effect</h2>
+              <div className={styles.overviewDivider} />
+              {OVERVIEW_TEXT.split("\n\n").map((para, i) => (
+                <p key={i} className={styles.overviewBody}>{para}</p>
+              ))}
+              <p className={styles.overviewGoal}>{TOP_LEVEL_GOAL}</p>
+              <button className={styles.overviewClose} onClick={() => setOverviewOpen(false)}>
+                Close ×
+              </button>
+            </div>
+          )}
+
+          {/* Domain panel */}
+          {!overviewOpen && !isIdle && selectedItem ? (
             <DomainPanel
               item={selectedItem}
               parentLabel={navState.parentLabel}
@@ -211,21 +198,20 @@ export default function App() {
               level={navState.level}
               isVisible={!isIdle}
             />
-          ) : (
+          ) : !overviewOpen && (
             <div className={styles.idlePanel}>
               <div className={styles.idleDivider} />
-              <p className={styles.idleLabel}>Seven domains of collective life</p>
+              <p className={styles.idleLabel}>
+                {levelPath.length === 0
+                  ? "Our Planet — seven domains of collective life"
+                  : `${getCentreLabel()} — sub-domains`}
+              </p>
               <ul className={styles.idleList}>
-                {domains.map((d, i) => (
+                {navState.currentList.map((d, i) => (
                   <li key={d.id}>
                     <button
                       className={styles.idleListItem}
-                      onClick={() => {
-                        if (levelPath.length > 0) {
-                          setLevelPath([]);
-                        }
-                        setActiveIndex(i);
-                      }}
+                      onClick={() => handleSelect(i)}
                     >
                       <span className={styles.idleNum}>0{i + 1}</span>
                       <span>{d.name}</span>
