@@ -26,7 +26,7 @@ export default function App() {
         selectedItem: activeIndex !== null ? domains[activeIndex] : null,
         breadcrumb: ["NextUs"],
         level: 0,
-        parentLabel: null,
+        parentLabel: "Our Planet",
       };
     }
 
@@ -132,7 +132,11 @@ export default function App() {
     setActiveIndex(null);
   }
   function handleBack() {
-    if (levelPath.length === 0) return;
+    if (levelPath.length === 0) {
+      // At top domain level — just deselect, return to full wheel
+      setActiveIndex(null);
+      return;
+    }
     const prevIndex = levelPath[levelPath.length - 1].index;
     setLevelPath((prev) => prev.slice(0, -1));
     setActiveIndex(prevIndex);
@@ -190,7 +194,7 @@ export default function App() {
               parentLabel={navState.parentLabel}
               breadcrumb={navState.breadcrumb.concat(selectedItem.name)}
               onExploreSubDomains={handleExploreSubDomains}
-              onBack={levelPath.length > 0 ? handleBack : null}
+              onBack={handleBack}
               onContribute={() => setContributeOpen(true)}
               onPrev={handlePrev}
               onNext={handleNext}
