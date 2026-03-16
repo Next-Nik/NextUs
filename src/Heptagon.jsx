@@ -145,12 +145,18 @@ export default function Heptagon({
         const isActive = !isSpinning && !isIdle && i === activeIndex;
         const r = isActive ? NODE_R_ACTIVE : NODE_R_DEFAULT;
         const words = getNodeLabel(domain.name);
-        const fontSize = isActive ? "14" : "13";
-        const fillColor = isSpinning
-          ? "rgba(74,74,74,0.35)"
+        const fontSize = isActive ? "17" : isSpinning ? "15" : "16";
+        const fillColor = isActive ? "#0F1523" : "#0F1523";
+        const nodeFill = isSpinning
+          ? "rgba(250,248,244,0.92)"        // readable during spin
           : isActive
-            ? "var(--dark, #0F1523)"   // dark on gold bg — high contrast
-            : "#3A3A3A";               // strong dark, not washed out
+            ? "rgba(200,146,42,0.18)"
+            : "#FFFFFF";
+        const nodeStroke = isSpinning
+          ? "rgba(200,146,42,0.45)"         // visible during spin
+          : isActive
+            ? "#C8922A"
+            : "rgba(200,146,42,0.7)";
 
         return (
           <g
@@ -168,8 +174,8 @@ export default function Heptagon({
 
             <circle
               cx={p.x} cy={p.y} r={r}
-              fill={isActive ? "rgba(200,146,42,0.15)" : "rgba(250,248,244,0.96)"}
-              stroke={isActive ? "#C8922A" : "rgba(200,146,42,0.4)"}
+              fill={nodeFill}
+              stroke={nodeStroke}
               strokeWidth={isActive ? 1.5 : 1}
               className={styles.nodeCircle}
             />
@@ -181,8 +187,8 @@ export default function Heptagon({
               fill={fillColor}
               fontSize={fontSize}
               fontFamily="'Cormorant Garamond', Georgia, serif"
-              fontWeight={isActive ? "400" : "300"}
-              letterSpacing="0.02em"
+              fontWeight={isSpinning ? "300" : isActive ? "400" : "400"}
+              letterSpacing="0.01em"
               style={{ pointerEvents: "none", userSelect: "none" }}
             >
               {words.map((word, wi) => (
