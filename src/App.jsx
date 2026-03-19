@@ -5,11 +5,15 @@ import ContributeModal from "./ContributeModal";
 import { domains, TOP_LEVEL_GOAL } from "./data";
 import styles from "./App.module.css";
 
-const OVERVIEW_TEXT = `The Overview Effect is what astronauts report when they first see Earth from space — a sudden, irreversible recognition of the whole. The boundaries dissolve. The fragmentation that seemed permanent from inside it becomes obviously contingent from outside it.
+const OVERVIEW_TEXT = `The Overview Effect is what astronauts report when they first see Earth from space — a sudden, irreversible recognition of the whole. The boundaries dissolve. The fragmentation that seemed inevitable from inside it becomes obviously contingent from outside it.
 
-NextUs is built from that vantage point.
+From that vantage point, a question becomes possible that is very hard to ask from inside the noise:
 
-Seven domains. Every scale. One map of what humanity is working on — and what still needs attention.`;
+What are we actually building toward?
+
+Not as ideology. As a genuine, shared picture of what flourishing looks like — domain by domain, scale by scale. Humanity has never seriously answered that question. NextUs is an attempt to answer it.
+
+Seven domains. Horizon goals at every level. A shared destination — so that the people already doing the work can find each other, aim at something worth building, and compound their effort rather than scatter it.`;
 
 export default function App() {
   const [activeIndex, setActiveIndex] = useState(null);
