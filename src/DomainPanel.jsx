@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CURRENT_STATE, SCALE_LABELS } from "./currentState";
+import { CURRENT_STATE, SCALE_LABELS, getQualitativeBand, DATA_STATUS } from "./currentState";
 import styles from "./DomainPanel.module.css";
 
 export default function DomainPanel({
@@ -43,6 +43,8 @@ export default function DomainPanel({
 
   const gapDistance = cs ? (10 - cs.score).toFixed(1) : null;
   const fillPct = cs ? `${(cs.score / 10 * 100).toFixed(1)}%` : "0%";
+  const band = cs ? getQualitativeBand(cs.score) : null;
+  const isIllustrative = DATA_STATUS === "illustrative";
 
   return (
     <div className={`${styles.panel} ${isVisible ? styles.visible : ""}`}>
@@ -122,33 +124,55 @@ export default function DomainPanel({
             </div>
           )}
 
-          {/* Score + bar */}
+          {/* Score + bar — qualitative when illustrative */}
           <div className={styles.scoreRow}>
             <div>
-              <div className={styles.scoreNumber}>
-                {cs.score}<span className={styles.scoreDenom}>/10</span>
+              {isIllustrative ? (
+                <div className={styles.scoreNumber} style={{ fontSize: "28px", letterSpacing: "0.02em" }}>
+                  {band?.label}
+                </div>
+              ) : (
+                <div className={styles.scoreNumber}>
+                  {cs.score}<span className={styles.scoreDenom}>/10</span>
+                </div>
+              )}
+              <div className={styles.scoreLabel}>
+                {isIllustrative ? "Current State — being mapped" : "Current State"}
               </div>
-              <div className={styles.scoreLabel}>Current State</div>
             </div>
             <div className={styles.scoreMeta}>
               <div className={styles.gapDistanceLabel}>
-                {gapDistance} points to horizon
+                {isIllustrative
+                  ? band?.description
+                  : `${gapDistance} points to horizon`}
               </div>
             </div>
           </div>
 
           <div className={styles.gapBarWrap}>
             <div className={styles.gapBarLabels}>
-              <span>0</span>
-              <span>Horizon Goal — 10</span>
+              <span>Where we are</span>
+              <span>Horizon Goal</span>
             </div>
             <div className={styles.gapBarTrack}>
               <div
                 className={styles.gapBarFill}
-                style={{ width: fillPct }}
+                style={{ width: fillPct, opacity: isIllustrative ? 0.65 : 1 }}
               />
               <div className={styles.gapBarHorizon} />
             </div>
+            {isIllustrative && (
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "12px",
+                fontStyle: "italic",
+                color: "var(--meta)",
+                marginTop: "8px",
+                opacity: 0.75,
+              }}>
+                Directional — precise figures arrive when this domain completes Decision Analytics.
+              </p>
+            )}
           </div>
 
           {/* Indicators */}
