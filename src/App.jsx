@@ -3,6 +3,8 @@ import Heptagon from "./Heptagon";
 import DomainPanel from "./DomainPanel";
 import ContributeModal from "./ContributeModal";
 import { domains, TOP_LEVEL_GOAL } from "./data";
+import { usePurposePiece } from "./usePurposePiece";
+import { DOMAIN_KEY_MAP } from "./currentState";
 import styles from "./App.module.css";
 
 const OVERVIEW_TEXT = `The Overview Effect is what astronauts report when they first see Earth from space — a sudden, irreversible recognition of the whole. The boundaries dissolve. The fragmentation that seemed inevitable from inside it becomes obviously contingent from outside it.
@@ -13,13 +15,28 @@ What are we actually building toward?
 
 Not as ideology. As a genuine, shared picture of what flourishing looks like — domain by domain, scale by scale. Humanity has never seriously answered that question. NextUs is an attempt to answer it.
 
-Seven domains. Horizon goals at every level. A shared destination — so that the people already doing the work can find each other, aim at something worth building, and compound their effort rather than scatter it.`;
+Seven domains. Horizon goals at every level. A shared destination — so that the people already doing the work can find each other, aim at something worth building, and compound their effort rather than scatter it.
+
+The map shows Current State alongside each Horizon Goal. The gap between them is not a cause for despair — it is a coordination opportunity. Someone is already closing it. The question is whether your effort finds theirs.`;
 
 export default function App() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [levelPath, setLevelPath] = useState([]);
   const [contributeOpen, setContributeOpen] = useState(false);
   const [overviewOpen, setOverviewOpen] = useState(false);
+
+  // Purpose Piece integration
+  const { userData, loading: ppLoading } = usePurposePiece();
+
+  // If user has a domain from Purpose Piece, auto-select it on first load
+  useEffect(() => {
+    if (userData?.domain && levelPath.length === 0 && activeIndex === null) {
+      const idx = DOMAIN_KEY_MAP[userData.domain];
+      if (idx !== undefined) {
+        setActiveIndex(idx);
+      }
+    }
+  }, [userData]);
 
   const isIdle = activeIndex === null;
 
@@ -75,7 +92,6 @@ export default function App() {
 
   const navState = getNavigationState();
 
-  // Derive centre label — what level are we on?
   function getCentreLabel() {
     if (levelPath.length === 0) return "Our Planet";
     const parentItem = getItemAtPath(levelPath);
@@ -84,11 +100,8 @@ export default function App() {
 
   function handleCentreClick() {
     if (levelPath.length === 0) {
-      // Top level — toggle Overview Effect panel
       setOverviewOpen((prev) => !prev);
     } else {
-      // Domain/sub-domain level — show horizon goal for this level
-      // (handled in the panel, just close any selected domain)
       setActiveIndex(null);
     }
   }
@@ -135,9 +148,9 @@ export default function App() {
     setLevelPath((prev) => [...prev, { index: activeIndex }]);
     setActiveIndex(null);
   }
+
   function handleBack() {
     if (levelPath.length === 0) {
-      // At top domain level — just deselect, return to full wheel
       setActiveIndex(null);
       return;
     }
@@ -149,9 +162,24 @@ export default function App() {
   const selectedItem = activeIndex !== null ? navState.currentList[activeIndex] : null;
   const centreLabel = getCentreLabel();
 
+  // User's domain index for heptagon highlight
+  const userDomainIndex = userData?.domain ? DOMAIN_KEY_MAP[userData.domain] : null;
+
   return (
     <div className={styles.app}>
       <div className={styles.grain} aria-hidden="true" />
+
+      {/* Purpose Piece welcome bar */}
+      {userData && !ppLoading && (
+        <div className={styles.ppBar}>
+          <span className={styles.ppBarDot} />
+          <p className={styles.ppBarText}>
+            Welcome back · <strong>{userData.archetype}</strong> in{" "}
+            <strong>{domains[DOMAIN_KEY_MAP[userData.domain]]?.name || userData.domain}</strong>{" "}
+            at <strong>{userData.scale}</strong> scale
+          </p>
+        </div>
+      )}
 
       <header className={styles.header}>
         <p className={styles.eyebrow}>NEXTUS · THE SEVEN DOMAINS</p>
@@ -168,6 +196,7 @@ export default function App() {
               isIdle={isIdle}
               centreLabel={centreLabel}
               onCentreClick={handleCentreClick}
+              userDomainIndex={userDomainIndex}
             />
           </div>
         </div>
@@ -204,6 +233,7 @@ export default function App() {
               onNext={handleNext}
               level={navState.level}
               isVisible={!isIdle}
+              userData={userData}
             />
           ) : !overviewOpen && (
             <div className={styles.idlePanel}>
@@ -213,15 +243,23 @@ export default function App() {
                   ? "Our Planet — seven domains of collective life"
                   : `${getCentreLabel()} — sub-domains`}
               </p>
+              {userData && levelPath.length === 0 && (
+                <p className={styles.idlePersonalised}>
+                  Your domain is highlighted — click to explore
+                </p>
+              )}
               <ul className={styles.idleList}>
                 {navState.currentList.map((d, i) => (
                   <li key={d.id}>
                     <button
-                      className={styles.idleListItem}
+                      className={`${styles.idleListItem} ${i === userDomainIndex && levelPath.length === 0 ? styles.idleListItemUser : ""}`}
                       onClick={() => handleSelect(i)}
                     >
                       <span className={styles.idleNum}>0{i + 1}</span>
                       <span>{d.name}</span>
+                      {i === userDomainIndex && levelPath.length === 0 && (
+                        <span className={styles.yourDomainMark}>← yours</span>
+                      )}
                     </button>
                   </li>
                 ))}
@@ -235,6 +273,7 @@ export default function App() {
         isOpen={contributeOpen}
         onClose={() => setContributeOpen(false)}
         domainName={selectedItem?.name ?? "this domain"}
+        userData={userData}
       />
     </div>
   );

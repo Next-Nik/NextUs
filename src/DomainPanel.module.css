@@ -15,6 +15,7 @@
   pointer-events: all;
 }
 
+/* ── BREADCRUMB ── */
 .breadcrumb {
   font-family: 'Cormorant SC', serif;
   font-size: 10px;
@@ -28,22 +29,43 @@
   gap: 6px;
   flex-wrap: wrap;
 }
+.breadcrumbSep { color: var(--gold); margin: 0 2px; opacity: 0.6; }
+.breadcrumbItem { color: var(--meta); }
+.breadcrumbCurrent { color: var(--gold); }
 
-.breadcrumbSep {
+/* ── YOUR DOMAIN BADGE ── */
+.yourDomainBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 4px 12px;
+  background: rgba(200,146,42,0.08);
+  border: 1px solid rgba(200,146,42,0.35);
+  border-radius: 40px;
+}
+
+.yourDomainDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.yourDomainBadge span:last-child {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
   color: var(--gold);
-  margin: 0 2px;
-  opacity: 0.6;
 }
 
-.breadcrumbItem {
-  color: var(--meta);
-  cursor: default;
-}
-
-.breadcrumbCurrent {
-  color: var(--gold);
-}
-
+/* ── DOMAIN NAME ── */
 .domainName {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(28px, 5vw, 42px);
@@ -54,6 +76,7 @@
   margin-bottom: 14px;
 }
 
+/* ── HORIZON GOAL ── */
 .horizonGoal {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(15px, 2.2vw, 18px);
@@ -83,6 +106,7 @@
   letter-spacing: 0.08em;
 }
 
+/* ── DESCRIPTION ── */
 .description {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(14px, 2vw, 16px);
@@ -93,6 +117,340 @@
   opacity: 0.85;
 }
 
+/* ── EXPLORE BUTTON ── */
+.exploreBtnTop {
+  background: transparent;
+  border: 1px solid var(--gold-line);
+  color: var(--dark);
+  font-family: 'Cormorant SC', serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  margin-bottom: 20px;
+}
+
+.exploreBtnTop:hover {
+  background: var(--gold-faint);
+  border-color: var(--gold-mid);
+  color: var(--gold);
+}
+
+.exploreBtnTop:hover .arrow { transform: translateX(4px); }
+
+.arrow { transition: transform 0.25s ease; }
+
+.comingSoonTop {
+  font-family: 'Cormorant SC', serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--meta);
+  margin-bottom: 20px;
+}
+
+/* ── CURRENT STATE LAYER ── */
+.currentStateDivider {
+  width: 48px;
+  height: 1px;
+  background: var(--gold-line);
+  margin: 20px 0 20px;
+}
+
+/* Gap Signal */
+.gapSignal {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.gapSignalDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--gold);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.gapSignalLabel {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+
+.gapSignalReason {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--meta);
+}
+
+/* Score */
+.scoreRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.scoreNumber {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--dark);
+}
+
+.scoreDenom {
+  font-size: 18px;
+  color: var(--meta);
+}
+
+.scoreLabel {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--meta);
+  margin-top: 4px;
+}
+
+.scoreMeta { text-align: right; }
+
+.gapDistanceLabel {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* Gap bar */
+.gapBarWrap { margin-bottom: 16px; }
+
+.gapBarLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.gapBarLabels span {
+  font-family: 'Cormorant SC', serif;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  color: var(--meta);
+}
+
+.gapBarTrack {
+  height: 5px;
+  background: rgba(200,146,42,0.10);
+  border-radius: 3px;
+  position: relative;
+  overflow: visible;
+}
+
+.gapBarFill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--gold);
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gapBarHorizon {
+  position: absolute;
+  right: 0;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+  opacity: 0.5;
+}
+
+/* Indicators */
+.indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gold-faint);
+}
+
+.indicatorLabel {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--meta);
+}
+
+.indicatorValue {
+  font-family: 'Cormorant SC', serif;
+  font-size: 10px;
+  letter-spacing: 0.10em;
+  color: var(--dark);
+}
+
+.trendArrow { font-size: 9px; }
+.trend_up .trendArrow { color: #4A7C59; }
+.trend_down .trendArrow { color: #a85c5c; }
+.trend_flat .trendArrow { color: var(--meta); }
+
+/* Narrative */
+.csNarrative {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--body);
+  line-height: 1.75;
+  margin-bottom: 20px;
+  opacity: 0.88;
+}
+
+/* In the Field */
+.inField { margin-bottom: 20px; }
+
+.inFieldLabel {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.inFieldPersonalised {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--meta);
+  margin-bottom: 8px;
+}
+
+.actorsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.actorChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: rgba(200,146,42,0.04);
+  border: 1px solid var(--gold-line);
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.actorChipHighlighted {
+  background: rgba(200,146,42,0.08);
+  border-color: var(--gold-mid);
+}
+
+.actorChipMuted { opacity: 0.55; }
+
+.actorDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.actorDotWinning { background: var(--gold); }
+.actorDotMuted { background: var(--meta); }
+
+.actorName {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--dark);
+  flex: 1;
+}
+
+.actorScale {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--meta);
+  flex-shrink: 0;
+}
+
+.actorsFooter { margin-top: 4px; }
+
+.seeAllBtn {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--meta);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.seeAllBtn:hover { color: var(--gold); }
+
+/* Entry point */
+.entryPoint {
+  padding: 14px 16px;
+  background: var(--gold-faint);
+  border-left: 2px solid var(--gold-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.entryPointText {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--body);
+  opacity: 0.88;
+  flex: 1;
+}
+
+.entryBtn {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  background: none;
+  border: 1px solid rgba(200,146,42,0.4);
+  border-radius: 40px;
+  padding: 7px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.entryBtn:hover {
+  background: rgba(200,146,42,0.08);
+  border-color: var(--gold);
+}
+
+/* ── DIVIDER ── */
 .divider {
   width: 48px;
   height: 1px;
@@ -100,98 +458,56 @@
   margin: 22px 0;
 }
 
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
-  margin-bottom: 24px;
-}
+/* ── MAILING LIST ── */
+.mailingList { margin-bottom: 24px; }
 
-.exploreBtn {
-  background: transparent;
-  border: 1px solid var(--gold-line);
-  color: var(--dark);
-  font-family: 'Cormorant SC', serif;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 11px 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-}
-
-.exploreBtn:hover {
-  background: var(--gold-faint);
-  border-color: var(--gold-mid);
-  color: var(--gold);
-}
-
-.arrow {
-  transition: transform 0.25s ease;
-}
-
-.exploreBtn:hover .arrow {
-  transform: translateX(4px);
-}
-
-.contributeLink {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+.mailingLabel {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 14px;
   font-weight: 300;
   font-style: italic;
   color: var(--meta);
-  letter-spacing: 0.01em;
-  transition: color 0.25s ease;
-  text-decoration: none;
+  margin-bottom: 10px;
 }
 
-.contributeLink:hover {
-  color: var(--gold);
+.mailingForm { display: flex; gap: 0; }
+
+.mailingInput {
+  flex: 1;
+  border: 1px solid var(--gold-line);
+  border-right: none;
+  background: white;
+  padding: 9px 12px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--dark);
+  outline: none;
+  transition: border-color 0.2s ease;
 }
 
-.backBtn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+.mailingInput:focus { border-color: var(--gold); }
+.mailingInput::placeholder { color: var(--meta); opacity: 0.5; }
+
+.mailingBtn {
+  background: var(--dark);
+  border: 1px solid var(--dark);
+  color: var(--bg);
   font-family: 'Cormorant SC', serif;
   font-size: 10px;
-  font-weight: 300;
-  letter-spacing: 0.12em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--meta);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: color 0.25s ease;
-  margin-bottom: 20px;
+  padding: 9px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
 
-.backBtn:hover {
-  color: var(--gold);
-}
+.mailingBtn:hover { background: var(--gold); border-color: var(--gold); }
 
-.backArrow {
-  transition: transform 0.25s ease;
-}
-
-.backBtn:hover .backArrow {
-  transform: translateX(-4px);
-}
-
-.navArrows {
-  display: flex;
-  gap: 8px;
-}
+/* ── NAV ARROWS ── */
+.navArrows { display: flex; gap: 8px; }
 
 .navBtn {
   background: transparent;
@@ -209,113 +525,34 @@
   font-family: Georgia, serif;
 }
 
-.navBtn:hover {
-  background: var(--gold-faint);
-  border-color: var(--gold-mid);
-}
+.navBtn:hover { background: var(--gold-faint); border-color: var(--gold-mid); }
 
-/* Explore button — top position */
-.exploreBtnTop {
-  background: transparent;
-  border: 1px solid var(--gold-line);
-  color: var(--dark);
+/* ── BACK BUTTON ── */
+.backBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   font-family: 'Cormorant SC', serif;
-  font-size: 11px;
-  font-weight: 400;
+  font-size: 10px;
+  font-weight: 300;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 9px 18px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-  margin-bottom: 20px;
-}
-
-.exploreBtnTop:hover {
-  background: var(--gold-faint);
-  border-color: var(--gold-mid);
-  color: var(--gold);
-}
-
-.exploreBtnTop:hover .arrow {
-  transform: translateX(4px);
-}
-
-.comingSoonTop {
-  font-family: 'Cormorant SC', serif;
-  font-size: 10px;
-  font-weight: 300;
-  letter-spacing: 0.1em;
   color: var(--meta);
-  margin-bottom: 20px;
-}
-
-/* Mailing list */
-.mailingList {
-  margin-bottom: 24px;
-}
-
-.mailingLabel {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 14px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--meta);
-  margin-bottom: 10px;
-}
-
-.mailingForm {
   display: flex;
-  gap: 0;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.25s ease;
+  margin-bottom: 20px;
 }
+.backBtn:hover { color: var(--gold); }
+.backBtn:hover .backArrow { transform: translateX(-4px); }
+.backArrow { transition: transform 0.25s ease; }
 
-.mailingInput {
-  flex: 1;
-  border: 1px solid var(--gold-line);
-  border-right: none;
-  background: white;
-  padding: 9px 12px;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--dark);
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.mailingInput:focus {
-  border-color: var(--gold);
-}
-
-.mailingInput::placeholder {
-  color: var(--meta);
-  opacity: 0.5;
-}
-
-.mailingBtn {
-  background: var(--dark);
-  border: 1px solid var(--dark);
-  color: var(--bg);
-  font-family: 'Cormorant SC', serif;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 9px 14px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.25s ease, border-color 0.25s ease;
-}
-
-.mailingBtn:hover {
-  background: var(--gold);
-  border-color: var(--gold);
-}
-
+/* ── RESPONSIVE ── */
 @media (max-width: 480px) {
   .mailingForm { flex-direction: column; }
   .mailingInput { border-right: 1px solid var(--gold-line); border-bottom: none; }
   .mailingBtn { width: 100%; }
+  .entryPoint { flex-direction: column; }
 }

@@ -5,7 +5,6 @@
   overflow: hidden;
 }
 
-/* Grain texture */
 .grain {
   position: fixed;
   inset: 0;
@@ -15,7 +14,45 @@
   opacity: 0.4;
 }
 
-/* Header */
+/* ── PURPOSE PIECE BAR ── */
+.ppBar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 40px;
+  background: rgba(200,146,42,0.06);
+  border-bottom: 1px solid rgba(200,146,42,0.15);
+}
+
+.ppBarDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  animation: ppPulse 3s ease-in-out infinite;
+}
+
+@keyframes ppPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+.ppBarText {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--body);
+}
+
+.ppBarText strong {
+  font-weight: 400;
+  color: var(--dark);
+}
+
+/* ── HEADER ── */
 .header {
   position: relative;
   z-index: 2;
@@ -32,7 +69,7 @@
   text-transform: uppercase;
 }
 
-/* Main layout — two-column */
+/* ── MAIN LAYOUT ── */
 .main {
   position: relative;
   z-index: 2;
@@ -52,9 +89,9 @@
     padding: 16px 20px 40px;
     gap: 8px;
   }
+  .ppBar { padding: 10px 20px; }
 }
 
-/* Heptagon column */
 .heptagonCol {
   display: flex;
   flex-direction: column;
@@ -68,70 +105,14 @@
   max-width: 520px;
 }
 
-/* Centre label inside SVG */
-.centre {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 108px;
-  height: 108px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-
-.centreIdle .centreGoal {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 7.5px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--meta);
-  line-height: 1.55;
-  text-align: center;
-  opacity: 0.75;
-}
-
-.centreActive {
-  font-family: 'Cormorant SC', serif;
-  font-size: 8.5px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  color: var(--gold);
-  text-transform: uppercase;
-  text-align: center;
-}
-
-/* Idle instruction */
-.instruction {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 12px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--meta);
-  letter-spacing: 0.04em;
-  margin-top: 8px;
-  opacity: 0.65;
-}
-
-/* Panel column */
-.panelCol {
-  padding: 0 0 0 48px;
-}
+.panelCol { padding: 0 0 0 48px; }
 
 @media (max-width: 780px) {
-  .panelCol {
-    padding: 0;
-  }
+  .panelCol { padding: 0; }
 }
 
-/* Idle panel — domain list */
-.idlePanel {
-  padding: 8px 0;
-}
+/* ── IDLE PANEL ── */
+.idlePanel { padding: 8px 0; }
 
 .idleDivider {
   width: 40px;
@@ -147,7 +128,15 @@
   letter-spacing: 0.16em;
   color: var(--meta);
   text-transform: uppercase;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
+}
+
+.idlePersonalised {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 14px;
 }
 
 .idleList {
@@ -181,6 +170,11 @@
   border-bottom-color: var(--gold-line);
 }
 
+.idleListItemUser {
+  color: var(--dark);
+  font-weight: 400;
+}
+
 .idleNum {
   font-family: 'Cormorant SC', serif;
   font-size: 9px;
@@ -191,7 +185,15 @@
   opacity: 0.6;
 }
 
-/* ── OVERVIEW EFFECT PANEL ── */
+.yourDomainMark {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  letter-spacing: 0.10em;
+  color: var(--gold);
+  margin-left: auto;
+}
+
+/* ── OVERVIEW PANEL ── */
 .overviewPanel {
   opacity: 0;
   transform: translateY(12px);
@@ -269,8 +271,4 @@
   transition: color 0.2s ease;
 }
 
-.overviewClose:hover {
-  color: var(--gold);
-}
-
-/* Centre group in SVG — handled via style prop in JSX */
+.overviewClose:hover { color: var(--gold); }
