@@ -35,13 +35,28 @@
   opacity: 0.6;
 }
 
-.breadcrumbItem {
-  color: var(--meta);
-  cursor: default;
+.breadcrumbItem { color: var(--meta); cursor: default; }
+.breadcrumbCurrent { color: var(--gold); }
+
+.yourDomainBadge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-transform: uppercase;
 }
 
-.breadcrumbCurrent {
-  color: var(--gold);
+.yourDomainDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
 }
 
 .domainName {
@@ -100,64 +115,6 @@
   margin: 22px 0;
 }
 
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
-  margin-bottom: 24px;
-}
-
-.exploreBtn {
-  background: transparent;
-  border: 1px solid var(--gold-line);
-  color: var(--dark);
-  font-family: 'Cormorant SC', serif;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 11px 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-}
-
-.exploreBtn:hover {
-  background: var(--gold-faint);
-  border-color: var(--gold-mid);
-  color: var(--gold);
-}
-
-.arrow {
-  transition: transform 0.25s ease;
-}
-
-.exploreBtn:hover .arrow {
-  transform: translateX(4px);
-}
-
-.contributeLink {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 14px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--meta);
-  letter-spacing: 0.01em;
-  transition: color 0.25s ease;
-  text-decoration: none;
-}
-
-.contributeLink:hover {
-  color: var(--gold);
-}
-
 .backBtn {
   background: none;
   border: none;
@@ -176,45 +133,11 @@
   margin-bottom: 20px;
 }
 
-.backBtn:hover {
-  color: var(--gold);
-}
+.backBtn:hover { color: var(--gold); }
 
-.backArrow {
-  transition: transform 0.25s ease;
-}
+.backArrow { transition: transform 0.25s ease; }
+.backBtn:hover .backArrow { transform: translateX(-4px); }
 
-.backBtn:hover .backArrow {
-  transform: translateX(-4px);
-}
-
-.navArrows {
-  display: flex;
-  gap: 8px;
-}
-
-.navBtn {
-  background: transparent;
-  border: 1px solid var(--gold-line);
-  color: var(--gold);
-  font-size: 22px;
-  line-height: 1;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-  font-family: Georgia, serif;
-}
-
-.navBtn:hover {
-  background: var(--gold-faint);
-  border-color: var(--gold-mid);
-}
-
-/* Explore button — top position */
 .exploreBtnTop {
   background: transparent;
   border: 1px solid var(--gold-line);
@@ -239,9 +162,9 @@
   color: var(--gold);
 }
 
-.exploreBtnTop:hover .arrow {
-  transform: translateX(4px);
-}
+.exploreBtnTop:hover .arrow { transform: translateX(4px); }
+
+.arrow { transition: transform 0.25s ease; }
 
 .comingSoonTop {
   font-family: 'Cormorant SC', serif;
@@ -252,10 +175,417 @@
   margin-bottom: 20px;
 }
 
-/* Mailing list */
-.mailingList {
-  margin-bottom: 24px;
+/* ── CURRENT STATE — SHARED ── */
+.currentStateDivider {
+  width: 48px;
+  height: 1px;
+  background: var(--gold-line);
+  margin: 22px 0 18px;
 }
+
+.gapBarLabels {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--meta);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.gapBarTrack {
+  position: relative;
+  height: 3px;
+  background: var(--gold-line);
+  border-radius: 2px;
+}
+
+.gapBarFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+.gapBarHorizon {
+  position: absolute;
+  right: 0;
+  top: -3px;
+  width: 1px;
+  height: 9px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+.actorsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.actorChip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--gold-line);
+  border-radius: 20px;
+  background: transparent;
+}
+
+.actorChipHighlighted {
+  border-color: var(--gold-mid);
+  background: var(--gold-faint);
+}
+
+.actorChipMuted { opacity: 0.4; }
+
+.actorDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--meta);
+  flex-shrink: 0;
+}
+
+.actorDotWinning { background: var(--gold); }
+.actorDotMuted   { background: var(--meta); opacity: 0.4; }
+
+.actorName {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--dark);
+}
+
+.actorScale {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--meta);
+  text-transform: uppercase;
+}
+
+.actorSlot {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--meta);
+}
+
+.entryPoint {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid var(--gold-line);
+  background: var(--gold-faint);
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.entryPointText {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--body);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.entryBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Cormorant SC', serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.entryBtn:hover { opacity: 0.7; }
+
+/* ── ILLUSTRATIVE PREVIEW ── */
+.illustrativeWrap {}
+
+.previewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.previewEyebrow {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  color: var(--meta);
+  text-transform: uppercase;
+}
+
+.previewBadge {
+  font-family: 'Cormorant SC', serif;
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--meta);
+  text-transform: uppercase;
+  border: 1px solid var(--gold-line);
+  padding: 3px 8px;
+  border-radius: 20px;
+  opacity: 0.55;
+}
+
+.previewBandRow {
+  margin-bottom: 16px;
+}
+
+.previewBandLabel {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--dark);
+  opacity: 0.5;
+  line-height: 1;
+}
+
+.previewGapSection {
+  margin-bottom: 22px;
+}
+
+.previewIndicators {
+  margin-bottom: 18px;
+}
+
+.previewSectionLabel {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--meta);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.6;
+}
+
+.previewIndicatorRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gold-line);
+  opacity: 0.35;
+}
+
+.previewIndicatorSlot {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--meta);
+}
+
+.previewIndicatorBlank {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--meta);
+}
+
+.previewActors {
+  margin-bottom: 16px;
+}
+
+.previewNote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--meta);
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+
+/* ── VERIFIED CURRENT STATE ── */
+.currentState {}
+
+.gapSignal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.gapSignalDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.gapSignalLabel {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.gapSignalReason {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--meta);
+  font-style: italic;
+}
+
+.scoreRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.scoreNumber {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: var(--dark);
+  line-height: 1;
+}
+
+.scoreDenom {
+  font-size: 18px;
+  color: var(--meta);
+  opacity: 0.5;
+}
+
+.scoreLabel {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--meta);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.scoreMeta { text-align: right; }
+
+.gapDistanceLabel {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--meta);
+}
+
+.gapBarWrap { margin-bottom: 18px; }
+
+.indicators {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.indicatorLabel {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--body);
+  opacity: 0.8;
+}
+
+.indicatorValue {
+  font-family: 'Cormorant SC', serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--dark);
+  white-space: nowrap;
+}
+
+.trendArrow {
+  font-family: Georgia, serif;
+  font-size: 11px;
+}
+
+.trend_up   { color: #5A8A5A; }
+.trend_down { color: #8A5A5A; }
+.trend_flat { color: var(--meta); }
+
+.csNarrative {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--body);
+  line-height: 1.7;
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+.inField {}
+
+.inFieldLabel {
+  font-family: 'Cormorant SC', serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--meta);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.inFieldPersonalised {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.actorsFooter { margin-top: 4px; }
+
+.seeAllBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--meta);
+  transition: color 0.2s ease;
+}
+
+.seeAllBtn:hover { color: var(--gold); }
+
+/* ── MAILING LIST ── */
+.mailingList { margin-bottom: 24px; }
 
 .mailingLabel {
   font-family: 'Cormorant Garamond', Georgia, serif;
@@ -285,9 +615,7 @@
   transition: border-color 0.2s ease;
 }
 
-.mailingInput:focus {
-  border-color: var(--gold);
-}
+.mailingInput:focus { border-color: var(--gold); }
 
 .mailingInput::placeholder {
   color: var(--meta);
@@ -318,4 +646,31 @@
   .mailingForm { flex-direction: column; }
   .mailingInput { border-right: 1px solid var(--gold-line); border-bottom: none; }
   .mailingBtn { width: 100%; }
+}
+
+/* ── NAV ARROWS ── */
+.navArrows {
+  display: flex;
+  gap: 8px;
+}
+
+.navBtn {
+  background: transparent;
+  border: 1px solid var(--gold-line);
+  color: var(--gold);
+  font-size: 22px;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  font-family: Georgia, serif;
+}
+
+.navBtn:hover {
+  background: var(--gold-faint);
+  border-color: var(--gold-mid);
 }
