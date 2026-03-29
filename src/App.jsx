@@ -184,10 +184,6 @@ export default function App() {
         <a href="https://nextus.world/login.html">Sign in →</a>
       </div>
 
-      <header className={styles.header}>
-        <p className={styles.eyebrow}>NEXTUS · THE SEVEN DOMAINS</p>
-      </header>
-
       <main className={styles.main}>
         {/* Heptagon column */}
         <div className={styles.heptagonCol}>

@@ -145,18 +145,20 @@ export default function Heptagon({
         const isActive = !isSpinning && !isIdle && i === activeIndex;
         const r = isActive ? NODE_R_ACTIVE : NODE_R_DEFAULT;
         const words = getNodeLabel(domain.name);
-        const fontSize = isActive ? "17" : isSpinning ? "15" : "16";
-        const fillColor = isActive ? "#0F1523" : "#0F1523";
+        const fontSize = isActive ? "18" : isSpinning ? "16" : "17";
+        const fillColor = "#0F1523";  // always full opacity
+        // Card behaviour: matches .nk-option — border at rest, lifts on active
         const nodeFill = isSpinning
-          ? "rgba(250,248,244,0.92)"        // readable during spin
+          ? "rgba(255,255,255,0.95)"
           : isActive
-            ? "rgba(200,146,42,0.18)"
+            ? "rgba(200,146,42,0.06)"
             : "#FFFFFF";
         const nodeStroke = isSpinning
-          ? "rgba(200,146,42,0.45)"         // visible during spin
+          ? "rgba(200,146,42,0.78)"
           : isActive
-            ? "#C8922A"
-            : "rgba(200,146,42,0.7)";
+            ? "rgba(200,146,42,1)"
+            : "rgba(200,146,42,0.78)";
+        const nodeStrokeWidth = isActive ? 1.5 : 1;
 
         return (
           <g
@@ -169,14 +171,14 @@ export default function Heptagon({
             onKeyDown={(e) => e.key === "Enter" && (isSpinning ? cancelSpinAndSelect(i) : onSelect(i))}
           >
             {isActive && (
-              <circle cx={p.x} cy={p.y} r={r + 18} fill="rgba(200,146,42,0.10)" />
+              <circle cx={p.x} cy={p.y} r={r + 16} fill="rgba(200,146,42,0.06)" stroke="rgba(200,146,42,0.25)" strokeWidth="1" />
             )}
 
             <circle
               cx={p.x} cy={p.y} r={r}
               fill={nodeFill}
               stroke={nodeStroke}
-              strokeWidth={isActive ? 1.5 : 1}
+              strokeWidth={nodeStrokeWidth}
               className={styles.nodeCircle}
             />
 
@@ -187,7 +189,7 @@ export default function Heptagon({
               fill={fillColor}
               fontSize={fontSize}
               fontFamily="'Cormorant Garamond', Georgia, serif"
-              fontWeight={isSpinning ? "300" : isActive ? "400" : "400"}
+              fontWeight={isActive ? "400" : "300"}
               letterSpacing="0.01em"
               style={{ pointerEvents: "none", userSelect: "none" }}
             >
@@ -214,52 +216,72 @@ export default function Heptagon({
         onClick={onCentreClick}
         role="button"
         tabIndex={0}
-        aria-label={centreLabel ? `${centreLabel} — click to expand` : "Our Planet"}
+        aria-label={centreLabel ? `${centreLabel} — tap to expand` : "Our Planet"}
         onKeyDown={(e) => e.key === "Enter" && onCentreClick && onCentreClick()}
         style={{ cursor: onCentreClick ? "pointer" : "default" }}
       >
+        {/* Pulse ring — breathes to invite interaction */}
+        <circle
+          cx={CX} cy={CY} r={84}
+          fill="none"
+          stroke="rgba(200,146,42,0.18)"
+          strokeWidth="1"
+          style={{ pointerEvents: "none" }}
+        >
+          <animate
+            attributeName="r"
+            values="82;90;82"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="stroke-opacity"
+            values="0.18;0.04;0.18"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        {/* Outer static ring */}
+        <circle
+          cx={CX} cy={CY} r={80}
+          fill="none"
+          stroke="rgba(200,146,42,0.12)"
+          strokeWidth="0.5"
+          style={{ pointerEvents: "none" }}
+        />
+
+        {/* Main circle */}
         <circle
           cx={CX} cy={CY} r={76}
-          fill="rgba(250,248,244,0.97)"
-          stroke="rgba(200,146,42,0.28)"
+          fill="#FFFFFF"
+          stroke="rgba(200,146,42,0.78)"
           strokeWidth="1.5"
           className={styles.centreCircle}
         />
+
         {centreLabel && (
-          <>
-            <text
-              x={CX} y={CY - 6}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill="#C8922A"
-              fontSize="20"
-              fontFamily="'Cormorant Garamond', Georgia, serif"
-              fontWeight="400"
-              fontStyle="italic"
-              style={{ pointerEvents: "none", userSelect: "none" }}
-            >
-              {centreLabel.split(" ").map((word, wi, arr) => (
-                <tspan
-                  key={wi}
-                  x={CX}
-                  dy={wi === 0 ? `${-(arr.length - 1) * 0.65}em` : "1.3em"}
-                >
-                  {word}
-                </tspan>
-              ))}
-            </text>
-            <text
-              x={CX} y={CY + 26}
-              textAnchor="middle"
-              fill="rgba(200,146,42,0.45)"
-              fontSize="9"
-              fontFamily="'Cormorant SC', serif"
-              letterSpacing="0.08em"
-              style={{ pointerEvents: "none", userSelect: "none" }}
-            >
-              expand
-            </text>
-          </>
+          <text
+            x={CX} y={CY}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill="#A8721A"
+            fontSize="18"
+            fontFamily="'Cormorant Garamond', Georgia, serif"
+            fontWeight="400"
+            fontStyle="italic"
+            style={{ pointerEvents: "none", userSelect: "none" }}
+          >
+            {centreLabel.split(" ").map((word, wi, arr) => (
+              <tspan
+                key={wi}
+                x={CX}
+                dy={wi === 0 ? `${-(arr.length - 1) * 0.6}em` : "1.25em"}
+              >
+                {word}
+              </tspan>
+            ))}
+          </text>
         )}
       </g>
     </svg>
