@@ -258,7 +258,6 @@ export default function App() {
                       className={styles.idleListItem}
                       onClick={() => handleSelect(i)}
                     >
-                      <span className={styles.idleNum}>0{i + 1}</span>
                       <span>{d.name}</span>
                     </button>
                   </li>

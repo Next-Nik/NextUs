@@ -126,15 +126,6 @@
   border-bottom-color: var(--gold-line);
 }
 
-.idleNum {
-  font-family: 'Cormorant SC', serif;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  color: var(--text-meta);
-  min-width: 20px;
-}
-
 /* ── OVERVIEW EFFECT PANEL ── */
 .overviewPanel {
   opacity: 0;
