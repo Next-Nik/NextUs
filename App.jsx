@@ -226,7 +226,7 @@ export default function App() {
         <a href="https://nextus.world/work-with-nik.html">Work with Nik</a>
         <a href="https://nextus.world/about.html">About</a>
         <a href="https://nextus.world/podcast.html">Podcast</a>
-        <a href="https://nextus.world/login.html">Sign in →</a>
+        <a href="https://nextus.world/login.html">Sign in &#8594;</a>
       </div>
 
       <main className={styles.main}>
