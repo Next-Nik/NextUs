@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { CURRENT_STATE, SCALE_LABELS, getQualitativeBand, DATA_STATUS } from "./currentState";
+import { CURRENT_STATE, SCALE_LABELS, DATA_STATUS } from "./currentState";
 import styles from "./DomainPanel.module.css";
 
 // ── ILLUSTRATIVE PREVIEW COMPONENT ───────────────────────────────────────────
 // Shows the structure of the Current State layer — not content.
 // Nothing here implies knowledge of actual domain state.
 function IllustrativePreview({ cs, onContribute, entryPoint }) {
-  const band = cs ? getQualitativeBand(cs.score) : null;
-
   return (
     <div className={styles.illustrativeWrap}>
       <div className={styles.currentStateDivider} />
@@ -16,13 +14,6 @@ function IllustrativePreview({ cs, onContribute, entryPoint }) {
         <span className={styles.previewEyebrow}>Current State</span>
         <span className={styles.previewBadge}>Being Mapped</span>
       </div>
-
-      {/* Band — directional only, not verified */}
-      {band && (
-        <div className={styles.previewBandRow}>
-          <span className={styles.previewBandLabel}>{band.label}</span>
-        </div>
-      )}
 
       {/* Gap bar — structural shape only */}
       <div className={styles.previewGapSection}>

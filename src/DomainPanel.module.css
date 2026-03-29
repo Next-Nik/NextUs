@@ -348,19 +348,6 @@
   opacity: 0.55;
 }
 
-.previewBandRow {
-  margin-bottom: 16px;
-}
-
-.previewBandLabel {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 28px;
-  font-weight: 300;
-  color: var(--dark);
-  opacity: 0.5;
-  line-height: 1;
-}
-
 .previewGapSection {
   margin-bottom: 22px;
 }
