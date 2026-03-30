@@ -119,7 +119,7 @@ export default function DomainPanel({
 
       {onBack && (
         <button className={styles.backBtn} onClick={onBack}>
-          <span className={styles.backArrow}>←</span> {parentLabel}
+          <span className={styles.backArrow}>&#8592;</span> {parentLabel}
         </button>
       )}
 
@@ -127,7 +127,7 @@ export default function DomainPanel({
         <nav className={styles.breadcrumb} aria-label="Navigation path">
           {breadcrumb.map((crumb, i) => (
             <span key={i}>
-              {i > 0 && <span className={styles.breadcrumbSep}>·</span>}
+              {i > 0 && <span className={styles.breadcrumbSep}>&#183;</span>}
               <span className={i === breadcrumb.length - 1 ? styles.breadcrumbCurrent : styles.breadcrumbItem}>
                 {crumb}
               </span>
@@ -139,19 +139,25 @@ export default function DomainPanel({
       {isUserDomain && userData && (
         <div className={styles.yourDomainBadge}>
           <span className={styles.yourDomainDot} />
-          <span>Your domain · {userData.archetype} · {SCALE_LABELS[userData.scale] || userData.scale}</span>
+          <span>Your domain &#183; {userData.archetype} &#183; {SCALE_LABELS[userData.scale] || userData.scale}</span>
         </div>
       )}
 
-      <h2 className={styles.domainName}>{item.name}</h2>
+      {/* Domain name with hover tooltip showing description */}
+      <div className={styles.domainNameWrap}>
+        <h2 className={styles.domainName}>{item.name}</h2>
+        {item.description && item.description !== "placeholder" && item.description !== "Being mapped" && (
+          <div className={styles.domainTooltip}>{item.description}</div>
+        )}
+      </div>
 
-      {level < 4 ? (
+      {/* Explore sub-domains — only if sub-domains exist and level < 4 */}
+      {level < 4 && item.subDomains && item.subDomains.length > 0 &&
+       item.subDomains[0].name !== "Being mapped" && (
         <button className={styles.exploreBtnTop} onClick={onExploreSubDomains}>
           Explore {item.name}
           <span className={styles.arrow}>&#8594;</span>
         </button>
-      ) : (
-        <p className={styles.comingSoonTop}>This level is being mapped —</p>
       )}
 
       <p className={styles.horizonGoal}>

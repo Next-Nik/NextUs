@@ -56,7 +56,41 @@
   flex-shrink: 0;
 }
 
-/* Domain name — the headline */
+/* Domain name — with hover tooltip */
+.domainNameWrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.domainNameWrap:hover .domainTooltip {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.domainTooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background: var(--dark);
+  color: rgba(255,255,255,0.92);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  padding: 14px 18px;
+  border-radius: 10px;
+  width: 320px;
+  max-width: 90vw;
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 24px rgba(15,21,35,0.22);
+}
+
 .domainName {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(30px, 5vw, 44px);
